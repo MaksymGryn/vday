@@ -1,0 +1,763 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b3b3f" />
+  <title>Rainforest Valentine 💚</title>
+  <style>
+    :root{
+      --bg1:#082f33;
+      --bg2:#125b5f;
+      --sun1:#ff6b8b;
+      --sun2:#ffd36a;
+      --card: rgba(255,255,255,.10);
+      --card2: rgba(255,255,255,.06);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.72);
+      --shadow: 0 18px 60px rgba(0,0,0,.35);
+      --ring: 0 0 0 3px rgba(255,255,255,.20);
+      --radius: 22px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      font-family: ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:
+        radial-gradient(1200px 900px at 15% 10%, rgba(255,211,106,.35), transparent 60%),
+        radial-gradient(900px 700px at 85% 15%, rgba(255,107,139,.28), transparent 55%),
+        radial-gradient(1000px 700px at 50% 100%, rgba(55,255,199,.10), transparent 55%),
+        linear-gradient(160deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
+    }
+
+    /* Subtle “tropical paper” texture */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.18;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,.18) 0 1px, transparent 1px),
+        radial-gradient(circle at 70% 60%, rgba(255,255,255,.12) 0 1px, transparent 1px),
+        radial-gradient(circle at 40% 85%, rgba(255,255,255,.10) 0 1px, transparent 1px);
+      background-size: 38px 38px, 56px 56px, 74px 74px;
+      mix-blend-mode: overlay;
+    }
+
+    .wrap{
+      min-height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:28px 16px 70px;
+      position:relative;
+      isolation:isolate;
+    }
+
+    .card{
+      width:min(860px, 100%);
+      background: linear-gradient(180deg, var(--card), var(--card2));
+      border:1px solid rgba(255,255,255,.18);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 26px 22px 18px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .card::after{
+      content:"";
+      position:absolute;
+      inset:-100px -100px auto auto;
+      width:260px;
+      height:260px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,211,106,.55), rgba(255,107,139,.10) 60%, transparent 70%);
+      filter: blur(2px);
+      transform: rotate(18deg);
+      opacity:.65;
+      pointer-events:none;
+    }
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.14);
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing:.2px;
+      margin:0 0 12px;
+    }
+
+    h1{
+      margin: 6px 0 8px;
+      font-size: clamp(28px, 3.4vw, 44px);
+      line-height:1.06;
+    }
+
+    .sub{
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 15.5px;
+      line-height: 1.5;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    @media (max-width: 840px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .note{
+      background: rgba(0,0,0,.14);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 18px;
+      padding: 16px 16px 14px;
+    }
+
+    .note p{
+      margin: 0;
+      color: rgba(255,255,255,.88);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+    .note p + p{ margin-top: 10px; }
+
+    .sig{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 14px;
+      align-items:center;
+    }
+
+    .pill{
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.08);
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+
+    .scene{
+      position:relative;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.10);
+      overflow:hidden;
+      padding: 12px;
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+      min-height: 260px;
+    }
+
+    .hint{
+      margin:0;
+      color: var(--muted);
+      font-size: 13.5px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    .hugBtn{
+      appearance:none;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.10);
+      color: rgba(255,255,255,.92);
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-weight: 650;
+      cursor:pointer;
+      transition: transform .15s ease, background .15s ease;
+    }
+    .hugBtn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.14); }
+    .hugBtn:focus-visible{ outline:none; box-shadow: var(--ring); }
+
+    .question{
+      margin-top: 18px;
+      border-top: 1px dashed rgba(255,255,255,.20);
+      padding-top: 18px;
+    }
+
+    h2{
+      margin:0 0 12px;
+      font-size: clamp(22px, 2.5vw, 30px);
+      line-height:1.12;
+    }
+
+    .actions{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      appearance:none;
+      border:none;
+      border-radius: 999px;
+      padding: 12px 16px;
+      font-weight: 800;
+      letter-spacing:.2px;
+      cursor:pointer;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      transform: translateZ(0);
+      transition: transform .15s ease, filter .15s ease;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:hover{ transform: translateY(-1px) scale(1.01); filter: brightness(1.03); }
+    .btn:active{ transform: translateY(0px) scale(.99); }
+    .btn:focus-visible{ outline:none; box-shadow: var(--ring), 0 10px 30px rgba(0,0,0,.25); }
+
+    .yes{
+      background: linear-gradient(135deg, rgba(255,107,139,.95), rgba(255,211,106,.95));
+      color: rgba(20,12,14,.92);
+    }
+
+    .no{
+      background: rgba(255,255,255,.12);
+      color: rgba(255,255,255,.92);
+      border: 1px solid rgba(255,255,255,.20);
+      box-shadow: 0 10px 24px rgba(0,0,0,.18);
+    }
+
+    .no.floating{
+      position: fixed;
+      z-index: 50;
+      margin: 0 !important;
+      touch-action: manipulation;
+    }
+
+    .footer{
+      margin-top: 14px;
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      gap: 10px;
+      color: rgba(255,255,255,.62);
+      font-size: 12.5px;
+    }
+    .footer a{ color: rgba(255,255,255,.78); }
+    .footer a:hover{ color: rgba(255,255,255,.92); }
+
+    /* Floating birds */
+    .birds{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      z-index:-1;
+      opacity:.9;
+    }
+    .bird{
+      position:absolute;
+      font-size: 22px;
+      filter: drop-shadow(0 8px 20px rgba(0,0,0,.25));
+      animation: fly 14s linear infinite;
+    }
+    .bird.b1{ top: 10%; left:-10%; animation-duration: 18s; }
+    .bird.b2{ top: 22%; left:-12%; animation-duration: 22s; animation-delay: -6s; font-size: 18px; opacity:.85; }
+    .bird.b3{ top: 38%; left:-14%; animation-duration: 16s; animation-delay: -10s; font-size: 20px; opacity:.78; }
+
+    @keyframes fly{
+      0%{ transform: translateX(0) translateY(0) rotate(-6deg); }
+      50%{ transform: translateX(62vw) translateY(-12px) rotate(6deg); }
+      100%{ transform: translateX(124vw) translateY(0) rotate(-4deg); }
+    }
+
+    /* Sloth SVG gentle sway */
+    .sloth{
+      width: 100%;
+      max-width: 360px;
+      margin: 0 auto;
+      display:block;
+      filter: drop-shadow(0 14px 24px rgba(0,0,0,.25));
+      transform-origin: 50% 20%;
+      animation: sway 6s ease-in-out infinite;
+    }
+    @keyframes sway{
+      0%,100%{ transform: rotate(-1.6deg); }
+      50%{ transform: rotate(1.6deg); }
+    }
+
+    /* Toast */
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,.55);
+      border: 1px solid rgba(255,255,255,.18);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: rgba(255,255,255,.92);
+      padding: 10px 12px;
+      border-radius: 999px;
+      font-weight: 650;
+      font-size: 13.5px;
+      box-shadow: var(--shadow);
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .25s ease, transform .25s ease;
+      z-index: 60;
+    }
+    .toast.show{
+      opacity:1;
+      transform: translateX(-50%) translateY(-4px);
+    }
+
+    /* Modal */
+    .modal{
+      position: fixed;
+      inset: 0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 20px 16px;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 80;
+    }
+    .modalCard{
+      width: min(560px, 100%);
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.08));
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: var(--shadow);
+      padding: 20px 18px 18px;
+      position:relative;
+      overflow:hidden;
+    }
+    .modalCard::before{
+      content:"";
+      position:absolute;
+      inset:-80px -60px auto auto;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,107,139,.55), rgba(255,211,106,.18) 60%, transparent 70%);
+      filter: blur(1px);
+      opacity:.8;
+      pointer-events:none;
+      transform: rotate(18deg);
+    }
+    .modalCard h3{
+      margin: 0 0 8px;
+      font-size: 26px;
+      line-height: 1.1;
+    }
+    .modalCard p{
+      margin: 0 0 12px;
+      color: rgba(255,255,255,.86);
+      line-height: 1.6;
+      font-size: 15.8px;
+    }
+
+    /* Heart FX */
+    #fx{
+      position: fixed;
+      inset: 0;
+      pointer-events:none;
+      overflow:hidden;
+      z-index: 100;
+    }
+    .heart{
+      position:absolute;
+      font-size: 18px;
+      animation: burst var(--dur, 900ms) cubic-bezier(.12,.82,.28,1) forwards;
+      filter: drop-shadow(0 10px 16px rgba(0,0,0,.25));
+      opacity: 0.98;
+      will-change: transform, opacity;
+    }
+    @keyframes burst{
+      0%{ transform: translate(0,0) scale(.75) rotate(0deg); opacity:1; }
+      100%{ transform: translate(var(--tx), var(--ty)) scale(1.35) rotate(var(--rot, 12deg)); opacity:0; }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .bird, .sloth, .heart{ animation: none !important; }
+      .btn, .hugBtn{ transition: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="birds" aria-hidden="true">
+    <div class="bird b1">🦜</div>
+    <div class="bird b2">🦚</div>
+    <div class="bird b3">🕊️</div>
+  </div>
+
+  <div id="fx" aria-hidden="true"></div>
+
+  <main class="wrap">
+    <section class="card" aria-labelledby="title">
+      <p class="tag">A little rainforest love note 💌 <span aria-hidden="true">·</span> <span id="today"></span></p>
+
+      <h1 id="title">Hola, <span id="toName">mi amor</span> 🌿</h1>
+      <p class="sub">
+        I miss you. I’m also ridiculously proud of you for being in Costa Rica helping tiny wild hearts —
+        sloths, tropical birds, and every fuzzy/feathery friend who needs you.
+      </p>
+
+      <div class="grid">
+        <div class="note">
+          <p>
+            Consider this a pocket-sized postcard from me to you:
+            <br><br>
+            <strong>Thank you</strong> for being the kind of person who shows up — gently, patiently, and with
+            so much love (very sloth-core, in the best way 🦥).
+          </p>
+          <p>
+            When you’re tired, remember: you’re doing something beautiful, and I’m cheering for you from afar.
+            I can’t wait to hear all your “today I met a…” stories.
+          </p>
+          <div class="sig">
+            <span class="pill">With all my love,</span>
+            <span class="pill" id="fromName">your human</span>
+            <span class="pill" title="A long-distance hug">🤗📦</span>
+          </div>
+        </div>
+
+        <div class="scene">
+          <!-- Cute, simple, original SVG sloth-on-a-branch -->
+          <svg class="sloth" id="sloth" viewBox="0 0 420 260" role="img" aria-label="A cute sloth hugging a heart on a branch">
+            <defs>
+              <linearGradient id="branch" x1="0" x2="1">
+                <stop offset="0" stop-color="rgba(255,211,106,.55)"/>
+                <stop offset="1" stop-color="rgba(255,107,139,.28)"/>
+              </linearGradient>
+              <linearGradient id="fur" x1="0" x2="1">
+                <stop offset="0" stop-color="#d8c6a8"/>
+                <stop offset="1" stop-color="#b99e7c"/>
+              </linearGradient>
+            </defs>
+
+            <!-- sparkles -->
+            <g opacity=".7">
+              <circle cx="52" cy="50" r="3" fill="rgba(255,255,255,.85)"/>
+              <circle cx="88" cy="86" r="2" fill="rgba(255,255,255,.75)"/>
+              <circle cx="344" cy="52" r="3" fill="rgba(255,255,255,.85)"/>
+              <circle cx="374" cy="92" r="2" fill="rgba(255,255,255,.75)"/>
+            </g>
+
+            <!-- branch -->
+            <path d="M30 170 C120 130, 220 150, 395 130" fill="none" stroke="url(#branch)" stroke-width="22" stroke-linecap="round"/>
+            <path d="M70 182 C165 150, 260 168, 395 150" fill="none" stroke="rgba(0,0,0,.18)" stroke-width="6" stroke-linecap="round"/>
+
+            <!-- sloth body -->
+            <g id="slothGroup" transform="translate(0,0)">
+              <ellipse cx="215" cy="145" rx="78" ry="66" fill="url(#fur)" stroke="rgba(0,0,0,.18)" stroke-width="3"/>
+              <ellipse cx="215" cy="150" rx="56" ry="46" fill="rgba(255,255,255,.22)"/>
+
+              <!-- arms hugging -->
+              <path d="M150 150 C120 150, 118 118, 148 110 C176 103, 190 126, 190 142"
+                    fill="none" stroke="#b99e7c" stroke-width="18" stroke-linecap="round"/>
+              <path d="M280 150 C312 150, 314 118, 284 110 C256 103, 240 126, 240 142"
+                    fill="none" stroke="#b99e7c" stroke-width="18" stroke-linecap="round"/>
+
+              <!-- heart -->
+              <path d="M215 162
+                       C205 147, 184 149, 184 168
+                       C184 190, 215 206, 215 206
+                       C215 206, 246 190, 246 168
+                       C246 149, 225 147, 215 162 Z"
+                    fill="rgba(255,107,139,.95)" stroke="rgba(0,0,0,.12)" stroke-width="3"/>
+
+              <!-- head -->
+              <circle cx="215" cy="88" r="46" fill="url(#fur)" stroke="rgba(0,0,0,.18)" stroke-width="3"/>
+              <ellipse cx="215" cy="96" rx="30" ry="26" fill="rgba(255,255,255,.22)"/>
+
+              <!-- face mask -->
+              <ellipse cx="197" cy="96" rx="18" ry="20" fill="rgba(0,0,0,.14)"/>
+              <ellipse cx="233" cy="96" rx="18" ry="20" fill="rgba(0,0,0,.14)"/>
+
+              <!-- eyes -->
+              <circle cx="200" cy="95" r="4.3" fill="rgba(15,10,8,.92)"/>
+              <circle cx="230" cy="95" r="4.3" fill="rgba(15,10,8,.92)"/>
+              <circle cx="198" cy="93" r="1.4" fill="rgba(255,255,255,.9)"/>
+              <circle cx="228" cy="93" r="1.4" fill="rgba(255,255,255,.9)"/>
+
+              <!-- smile -->
+              <path d="M205 112 C214 120, 222 120, 232 112" fill="none" stroke="rgba(15,10,8,.70)" stroke-width="3.2" stroke-linecap="round"/>
+
+              <!-- little claws -->
+              <path d="M138 120 l-8 -6" stroke="rgba(15,10,8,.55)" stroke-width="3" stroke-linecap="round"/>
+              <path d="M145 118 l-8 -6" stroke="rgba(15,10,8,.55)" stroke-width="3" stroke-linecap="round"/>
+              <path d="M292 120 l8 -6" stroke="rgba(15,10,8,.55)" stroke-width="3" stroke-linecap="round"/>
+              <path d="M285 118 l8 -6" stroke="rgba(15,10,8,.55)" stroke-width="3" stroke-linecap="round"/>
+            </g>
+
+            <!-- leaves -->
+            <g opacity=".9">
+              <path d="M44 146 C26 132, 30 106, 60 102 C74 132, 64 152, 44 146 Z" fill="rgba(55,255,199,.18)" stroke="rgba(255,255,255,.10)"/>
+              <path d="M382 146 C400 132, 396 106, 366 102 C352 132, 362 152, 382 146 Z" fill="rgba(55,255,199,.18)" stroke="rgba(255,255,255,.10)"/>
+            </g>
+          </svg>
+
+          <p class="hint">
+            Tap the sloth for a pocket hug 🦥
+            <button class="hugBtn" id="hugBtn" type="button">Send hug</button>
+          </p>
+        </div>
+      </div>
+
+      <div class="question" id="question">
+        <h2>Will you be my Valentine?</h2>
+        <div class="actions">
+          <button class="btn yes" id="yesBtn" type="button">Yes! 💖</button>
+          <button class="btn no" id="noBtn" type="button" aria-label="No (this button is very shy)">No 🙈</button>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span>Tip: You can personalize the page using <code>?to=NAME&amp;from=NAME</code></span>
+        <span>Made with 🌺 + 🥥 + 💘</span>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <div class="modal" id="modal" hidden>
+    <div class="modalCard" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h3 id="modalTitle">Yay!! 🌺💘</h3>
+      <p id="modalMsg">
+        Officially, unequivocally, rainforest-level obsessed with you. When you’re back, I’m stealing you for a
+        long hug… the kind that lasts longer than a sloth crossing a branch.
+      </p>
+      <p><strong>Mission for tonight:</strong> send me one photo of your favorite animal friend 🦥🦜</p>
+      <div class="actions">
+        <button class="btn yes" id="closeBtn" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const $ = (sel) => document.querySelector(sel);
+
+      const toName = $("#toName");
+      const fromName = $("#fromName");
+      const today = $("#today");
+      const yesBtn = $("#yesBtn");
+      const noBtn = $("#noBtn");
+      const modal = $("#modal");
+      const closeBtn = $("#closeBtn");
+      const fx = $("#fx");
+      const toast = $("#toast");
+      const hugBtn = $("#hugBtn");
+      const sloth = $("#sloth");
+
+      const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      // ---- Personalization via query string: ?to=Name&from=Name
+      const params = new URLSearchParams(window.location.search);
+      const to = (params.get("to") || "mi amor").trim().slice(0, 40);
+      const from = (params.get("from") || "your human").trim().slice(0, 40);
+
+      toName.textContent = to || "mi amor";
+      fromName.textContent = from || "your human";
+
+      // Friendly date (uses viewer's locale)
+      try{
+        const d = new Date();
+        today.textContent = d.toLocaleDateString(undefined, { weekday:"long", month:"long", day:"numeric" });
+      }catch(e){
+        today.textContent = "";
+      }
+
+      // ---- Heart burst effect
+      function burstHearts(x, y, count){
+        if(reducedMotion) return;
+        const emojis = ["💖","💘","💝","💗","💞"];
+        const n = count ?? 18;
+
+        for(let i=0;i<n;i++){
+          const span = document.createElement("span");
+          span.className = "heart";
+          span.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+
+          const angle = Math.random() * Math.PI * 2;
+          const dist = 30 + Math.random() * 140;
+          const tx = Math.cos(angle) * dist;
+          const ty = Math.sin(angle) * dist - (40 + Math.random()*60);
+
+          span.style.left = x + "px";
+          span.style.top = y + "px";
+          span.style.setProperty("--tx", tx.toFixed(1) + "px");
+          span.style.setProperty("--ty", ty.toFixed(1) + "px");
+          span.style.setProperty("--rot", (Math.random()*40 - 20).toFixed(1) + "deg");
+          span.style.setProperty("--dur", (650 + Math.random()*650).toFixed(0) + "ms");
+
+          fx.appendChild(span);
+          span.addEventListener("animationend", () => span.remove(), { once:true });
+        }
+      }
+
+      function toastMsg(msg){
+        toast.textContent = msg;
+        toast.classList.add("show");
+        window.clearTimeout(toast._t);
+        toast._t = window.setTimeout(() => toast.classList.remove("show"), 1800);
+      }
+
+      // Pocket hug triggers
+      function sendHug(ev){
+        const x = (ev?.clientX) ?? (window.innerWidth/2);
+        const y = (ev?.clientY) ?? (window.innerHeight/2);
+        burstHearts(x, y, 14);
+        toastMsg("Pocket hug delivered 🤗💌");
+      }
+      hugBtn.addEventListener("click", sendHug);
+      sloth.addEventListener("click", sendHug);
+
+      // ---- Evasive “No” button
+      let noIsFloating = false;
+
+      function floatNoButton(){
+        if(noIsFloating) return;
+
+        const rect = noBtn.getBoundingClientRect();
+        noBtn.style.width = rect.width + "px";
+        noBtn.style.height = rect.height + "px";
+        noBtn.style.left = rect.left + "px";
+        noBtn.style.top = rect.top + "px";
+        noBtn.classList.add("floating");
+        noBtn.style.position = "fixed";
+        noBtn.style.zIndex = "50";
+
+        noIsFloating = true;
+      }
+
+      function pickSafeSpot(avoidX, avoidY, w, h){
+        const margin = 14;
+        const maxX = Math.max(margin, window.innerWidth - w - margin);
+        const maxY = Math.max(margin, window.innerHeight - h - margin);
+
+        const minX = margin;
+        const minY = margin;
+
+        const yesRect = yesBtn.getBoundingClientRect();
+        const avoidYes = { x: yesRect.left + yesRect.width/2, y: yesRect.top + yesRect.height/2 };
+
+        let x = minX, y = minY;
+        let tries = 0;
+
+        while(tries < 40){
+          tries++;
+          x = minX + Math.random() * (maxX - minX);
+          y = minY + Math.random() * (maxY - minY);
+
+          const farFromPointer = Math.hypot((x + w/2) - avoidX, (y + h/2) - avoidY) > 170;
+          const farFromYes = Math.hypot((x + w/2) - avoidYes.x, (y + h/2) - avoidYes.y) > 150;
+
+          if(farFromPointer && farFromYes) break;
+        }
+        return { x, y };
+      }
+
+      function moveNo(ev){
+        floatNoButton();
+
+        const rect = noBtn.getBoundingClientRect();
+        const w = rect.width;
+        const h = rect.height;
+
+        const avoidX = (ev && typeof ev.clientX === "number") ? ev.clientX : window.innerWidth/2;
+        const avoidY = (ev && typeof ev.clientY === "number") ? ev.clientY : window.innerHeight/2;
+
+        const { x, y } = pickSafeSpot(avoidX, avoidY, w, h);
+
+        // little playful wobble
+        const rot = (Math.random()*10 - 5).toFixed(1);
+
+        noBtn.style.transition = reducedMotion ? "none" : "left .12s ease, top .12s ease, transform .12s ease";
+        noBtn.style.left = x.toFixed(0) + "px";
+        noBtn.style.top = y.toFixed(0) + "px";
+        noBtn.style.transform = "rotate(" + rot + "deg)";
+      }
+
+      noBtn.addEventListener("mouseenter", moveNo);
+      noBtn.addEventListener("focus", moveNo);
+
+      // On touch devices, treat taps as “try to press no” and dodge instead
+      noBtn.addEventListener("pointerdown", (ev) => {
+        if(ev.pointerType && ev.pointerType !== "mouse"){
+          ev.preventDefault();
+          moveNo(ev);
+          toastMsg("Nice try 😄");
+        }
+      });
+
+      // Keep the floating button within bounds on resize
+      window.addEventListener("resize", () => {
+        if(!noIsFloating) return;
+        const rect = noBtn.getBoundingClientRect();
+        const maxLeft = window.innerWidth - rect.width - 14;
+        const maxTop = window.innerHeight - rect.height - 14;
+        const left = Math.min(Math.max(14, rect.left), Math.max(14, maxLeft));
+        const top = Math.min(Math.max(14, rect.top), Math.max(14, maxTop));
+        noBtn.style.left = left + "px";
+        noBtn.style.top = top + "px";
+      });
+
+      // ---- Yes button celebration
+      function openModal(){
+        modal.hidden = false;
+
+        // Hide the No button so it stops escaping after "Yes"
+        noBtn.hidden = true;
+        noBtn.style.pointerEvents = "none";
+
+        const cx = window.innerWidth/2;
+        const cy = window.innerHeight/2;
+        burstHearts(cx, cy, 26);
+        toastMsg("Best answer 🥹💖");
+      }
+
+      function closeModal(){
+        modal.hidden = true;
+      }
+
+      yesBtn.addEventListener("click", (ev) => {
+        const r = yesBtn.getBoundingClientRect();
+        burstHearts(r.left + r.width/2, r.top + r.height/2, 22);
+        openModal();
+      });
+
+      closeBtn.addEventListener("click", closeModal);
+
+      // Close modal on backdrop click
+      modal.addEventListener("click", (ev) => {
+        if(ev.target === modal) closeModal();
+      });
+
+      // Close modal with Escape
+      window.addEventListener("keydown", (ev) => {
+        if(ev.key === "Escape" && !modal.hidden) closeModal();
+      });
+    })();
+  </script>
+</body>
+</html>
